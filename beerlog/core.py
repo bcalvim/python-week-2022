@@ -21,7 +21,7 @@ def add_beer_to_database(
             cost=cost,
         )
         session.add(beer)
-        session.commit
+        session.commit()
     return True
 
 
