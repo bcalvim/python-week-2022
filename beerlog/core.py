@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from sqlmodel import select
 
@@ -14,19 +14,17 @@ def add_beer_to_database(
     cost: int,
 ) -> bool:
     with get_session() as session:
-        beer = Beer(
-            name=name,
-            style=style,
-            flavor=flavor,
-            image=image,
-            cost=cost,
-        )
+        beer = Beer(**locals())
         session.add(beer)
         session.commit()
+
     return True
 
 
-def get_beers_from_database() -> List[Beer]:
+def get_beers_from_database(style: Optional[str] = None) -> List[Beer]:
     with get_session() as session:
         sql = select(Beer)
+        if style:
+            sql = sql.where(Beer.style == style)
         return list(session.exec(sql))
+
