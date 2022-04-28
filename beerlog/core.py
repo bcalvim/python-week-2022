@@ -1,5 +1,4 @@
-from typing import Optional, List
-from webbrowser import get
+from typing import List
 from sqlmodel import select
 from beerlog.database import get_session
 from beerlog.models import Beer
